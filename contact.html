@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>お問い合わせ｜歯科治療計画書ツール</title>
+<style>
+  :root{ --main:#177f8c; --main-dark:#0f5f69; --ink:#243b40; --sub:#6b8085; --line:#d6e2e5; --bg:#f0f4f5; }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 16px 64px;background:var(--bg);color:var(--ink);
+       font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",sans-serif;
+       line-height:1.85;font-size:16px;}
+  .sheet{max-width:760px;margin:0 auto;background:#fff;border-radius:14px;
+         padding:40px 36px;box-shadow:0 2px 14px rgba(20,60,70,.07);}
+  h1{font-size:1.5rem;color:var(--main-dark);margin:0 0 6px;}
+  .lead{color:var(--sub);font-size:.92rem;margin:0 0 28px;padding-bottom:20px;
+        border-bottom:2px solid var(--main);}
+  h2{font-size:1.06rem;color:var(--main-dark);margin:30px 0 10px;
+     padding-left:11px;border-left:4px solid var(--main);}
+  p{margin:0 0 14px;}
+  ul{margin:0 0 14px;padding-left:1.3em;}
+  li{margin-bottom:6px;}
+  .formbox{margin:24px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fbfdfd;}
+  /* 送信ボタンまで表示されるだけの高さを確保する（枠内スクロールを避けるため） */
+  .formbox iframe{display:block;width:100%;height:1120px;border:0;}
+  .btn{display:inline-block;background:var(--main);color:#fff;text-decoration:none;
+       padding:14px 26px;border-radius:10px;font-weight:bold;}
+  .btn:hover{background:var(--main-dark);}
+  .note{background:#eef7fa;border-radius:10px;padding:16px 18px;margin:16px 0;font-size:.94rem;}
+  .foot{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+        color:var(--sub);font-size:.88rem;}
+  a{color:var(--main-dark);}
+  @media (max-width:560px){ .sheet{padding:28px 20px;} body{font-size:15px;}
+                            .formbox iframe{height:1420px;} }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <h1>お問い合わせ</h1>
+  <p class="lead">歯科治療計画書ツール</p>
+
+  <p>ご質問・不具合のご報告・ご要望は、下のフォームからお送りください。順次確認のうえ、ご返信いたします。</p>
+
+  <h2>お寄せいただくことの多いご質問</h2>
+  <ul>
+    <li>分院や複数の端末で使えますか</li>
+    <li>入力した患者情報はどこかに保存されますか（→ <a href="./privacy.html">プライバシーポリシー</a>）</li>
+    <li>購入したのにフル機能が開きません</li>
+    <li>印刷したときのレイアウトを調整したい</li>
+  </ul>
+
+  <div class="note">
+    お問い合わせの際、<strong>実在する患者さんのお名前や治療内容は書かないでください</strong>。不具合のご報告は、架空の名前に置き換えてお送りいただけますと助かります。
+  </div>
+
+  <!-- ▼ここに Google フォームの埋め込みURLを入れる（下の README の手順を参照）
+       未設定の間はフォームが表示されず、下のボタンだけが出る -->
+  <div class="formbox" id="formbox" hidden>
+    <iframe id="formframe" src="" title="お問い合わせフォーム" loading="lazy">読み込んでいます…</iframe>
+  </div>
+
+  <p id="fallback">
+    <a class="btn" id="formlink" href="#">お問い合わせフォームを開く</a>
+  </p>
+
+  <script>
+    // Google フォームのURL（2026-07-24 オーナー作成）
+    // ?usp=dialog 等の余計なパラメータは外し、末尾は /viewform にしておく
+    var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScij_Pu5ZiE6GgymNqxgw8I_hDN1HREkhfylAb7FbYo60mYfA/viewform";
+
+    if (FORM_URL) {
+      document.getElementById("formlink").href = FORM_URL;
+      // 埋め込み用URL（/viewform?embedded=true）が取れている場合は、その場に表示する
+      if (/\/viewform/.test(FORM_URL)) {
+        document.getElementById("formframe").src =
+          FORM_URL + (FORM_URL.indexOf("?") < 0 ? "?" : "&") + "embedded=true";
+        document.getElementById("formbox").hidden = false;
+        document.getElementById("fallback").hidden = true;
+      }
+    } else {
+      document.getElementById("fallback").innerHTML =
+        '<span style="color:#a05">※ お問い合わせフォームは準備中です。</span>';
+    }
+  </script>
+
+  <p class="foot">
+    <a href="./privacy.html">プライバシーポリシー</a>
+  </p>
+
+</div>
+</body>
+</html>
