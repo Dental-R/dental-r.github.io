@@ -1,0 +1,15 @@
+{
+  "name": "治療計画書ツール",
+  "short_name": "治療計画書",
+  "description": "歯をタップして色分けし、そのまま印刷できる歯科向け治療計画書作成ツール。データを自動保存せず、外部にも送信しません。",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f0f4f5",
+  "theme_color": "#177f8c",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
