@@ -2,7 +2,7 @@
 // 患者データは扱わない（アプリ本体のファイルのみ保存。写真は blob: URL のため SW を経由しない）
 // ※ 中身を更新したら、下の CACHE の日付を必ず上げること。
 //    版数が同じままだと、古いキャッシュが残って更新が届かない。
-const CACHE = "tkplan-2026-07-24";
+const CACHE = "tkplan-2026-07-24b";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
