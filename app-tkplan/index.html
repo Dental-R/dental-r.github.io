@@ -1037,7 +1037,10 @@ window.TRACED = {
   makePlan();
 
   // ── フル機能の解放（Microsoft Store アプリ内課金 / Digital Goods API）──
-  const FULL_ITEM_ID="chiryokeikaku_full";   // Partner Centerでアドオン登録後、正式なStore IDに差し替える
+  // Digital Goods API の itemId は Partner Center の「製品ID（＝InAppOfferToken）」を渡す。
+  // アドオンの Store ID（9NL2WH0N5JNS）ではない。2026-07-25 に公式ドキュメントで確認済み。
+  // https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps/how-to/digital-goods-api
+  const FULL_ITEM_ID="chiryokeikaku_full";
   let dg=null;
   function unlockFull(){ document.body.classList.remove("locked"); }
   async function hasFullLicense(){
@@ -1054,8 +1057,9 @@ window.TRACED = {
     if(!dg){ alert("フル機能の購入は、Microsoft Store からインストールした本アプリ内でのみ行えます。\n（無料のままでも治療計画書の作成・印刷はすべてお使いいただけます）"); return; }
     try{
       const [item]=await dg.getDetails([FULL_ITEM_ID]);
+      // data に渡すキーは sku（itemId ではない）。ここを間違えると購入画面が出ない。
       const req=new PaymentRequest(
-        [{supportedMethods:"https://store.microsoft.com/billing",data:{itemId:FULL_ITEM_ID}}],
+        [{supportedMethods:"https://store.microsoft.com/billing",data:{sku:(item&&item.itemId)||FULL_ITEM_ID}}],
         {total:{label:(item&&item.title)||"フル機能解放",amount:(item&&item.price)||{currency:"JPY",value:"0"}}});
       const res=await req.show();
       await res.complete("success");
