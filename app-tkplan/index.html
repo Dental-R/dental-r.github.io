@@ -1057,10 +1057,16 @@ window.TRACED = {
     if(!dg){ alert("フル機能の購入は、Microsoft Store からインストールした本アプリ内でのみ行えます。\n（無料のままでも治療計画書の作成・印刷はすべてお使いいただけます）"); return; }
     try{
       const [item]=await dg.getDetails([FULL_ITEM_ID]);
+      // アドオンはアプリ公開後にしか提出できないため、公開直後は商品が未登録の期間がある。
+      // そのときボタンが無反応にならないよう、状況を伝えて終わる。
+      if(!item){
+        alert("ただいまフル機能の購入手続きを準備中です。\nお手数ですが、しばらくたってからお試しください。\n（無料のままでも治療計画書の作成・印刷はすべてお使いいただけます）");
+        return;
+      }
       // data に渡すキーは sku（itemId ではない）。ここを間違えると購入画面が出ない。
       const req=new PaymentRequest(
-        [{supportedMethods:"https://store.microsoft.com/billing",data:{sku:(item&&item.itemId)||FULL_ITEM_ID}}],
-        {total:{label:(item&&item.title)||"フル機能解放",amount:(item&&item.price)||{currency:"JPY",value:"0"}}});
+        [{supportedMethods:"https://store.microsoft.com/billing",data:{sku:item.itemId}}],
+        {total:{label:item.title||"フル機能解放",amount:item.price}});
       const res=await req.show();
       await res.complete("success");
       unlockFull();
