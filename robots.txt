@@ -1,0 +1,8 @@
+# Dental-R 公開サイト
+# ※ app-tkplan（フル機能版HTML）を Disallow にしないこと。
+#    Disallow するとクローラがページを取得できず、中の noindex を読めなくなるため、
+#    かえって URL が検索結果に残る。検索避けは各ページの noindex メタで行う。
+User-agent: *
+Allow: /
+
+Sitemap: https://dental-r.github.io/sitemap.xml
